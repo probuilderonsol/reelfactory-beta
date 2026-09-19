@@ -11,9 +11,10 @@ This repository exists only to hand out builds. The source is private.
 
 ## Download
 
-**[→ Latest build](../../releases/latest)**
+**[→ ReelFactory 1.0.0 beta 1 (.dmg, 118 MB)](https://github.com/probuilderonsol/reelfactory-beta/releases/download/v1.0.0-beta.1/ReelFactory-1.0.0-arm64.dmg)**
 
 Apple Silicon (M1/M2/M3/M4), macOS 12 or newer.
+Older builds and release notes: **[all releases](../../releases)**.
 
 ## Install
 
