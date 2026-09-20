@@ -1,0 +1,9 @@
+[
+  {"tag_name": "v9.9.9-draft", "draft": true, "prerelease": true,
+   "assets": [{"name": "ReelFactory-9.9.9-arm64.dmg", "browser_download_url": "https://example.invalid/draft.dmg"}]},
+  {"tag_name": "v1.0.0-beta.1", "draft": false, "prerelease": true,
+   "assets": [
+     {"name": "ReelFactory-1.0.0-arm64.dmg.blockmap", "browser_download_url": "https://example.invalid/x.blockmap"},
+     {"name": "ReelFactory-1.0.0-arm64.dmg", "browser_download_url": "https://github.com/probuilderonsol/reelfactory-beta/releases/download/v1.0.0-beta.1/ReelFactory-1.0.0-arm64.dmg"}
+   ]}
+]
