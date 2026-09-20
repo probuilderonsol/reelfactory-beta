@@ -1,51 +1,44 @@
-# ReelFactory — beta downloads
+# ReelFactory — beta
 
-A floating panel that edits inside DaVinci Resolve. It drives Resolve through
-its scripting API, so it does not replace Resolve or open your footage itself —
-it builds timelines, captions, cuts, effects and renders in the project you
-already have open.
+A floating panel that edits inside DaVinci Resolve, and a bridge so your
+Claude Code can drive Resolve too.
 
-This repository exists only to hand out builds. The source is private.
+## Install — paste this into Terminal
 
----
+```
+curl -fsSL https://raw.githubusercontent.com/probuilderonsol/reelfactory-beta/main/install.sh | bash
+```
 
-## Download
+You need three things before you paste it: an **Apple Silicon Mac**,
+**DaVinci Resolve** (opened at least once), and **Claude Code**. The line
+checks for all three and tells you which one is missing.
 
-**[→ ReelFactory 1.0.0 beta 1 (.dmg, 118 MB)](https://github.com/probuilderonsol/reelfactory-beta/releases/download/v1.0.0-beta.1/ReelFactory-1.0.0-arm64.dmg)**
+Then, once, in Resolve: **Preferences → System → General → External scripting
+using: Local**. The installer opens Resolve for you at the end and prints this
+reminder. After that, open ReelFactory from the Dock → **Setup** → **Install
+engine**.
 
-Apple Silicon (M1/M2/M3/M4), macOS 12 or newer.
-Older builds and release notes: **[all releases](../../releases)**.
+**To update:** paste the same line again.
 
-## Install
+## What the line does
 
-Full steps are in **[INSTALL.md](INSTALL.md)**. The short version:
+Nothing hidden — [read it](install.sh) before you run it. In order:
 
-1. Open the `.dmg`, drag **ReelFactory** into **Applications**.
-2. Run this once in Terminal:
+1. Checks Apple Silicon, macOS 12+, Xcode Command Line Tools, Resolve, Claude Code. Stops and says what to install if one is missing.
+2. Downloads the newest release into `/Applications`, adds it to the Dock, and clears the download quarantine (the app is ad-hoc signed, so macOS would otherwise call it "damaged" — it is not).
+3. Installs `ffmpeg`, `mlx-whisper` and `demucs` through Homebrew and pipx. Homebrew asks for your password once. If you skip it, everything works except the caption panes.
+4. Sets up the [DaVinci Resolve MCP server](https://github.com/samuelgursky/davinci-resolve-mcp) (MIT) in Claude Code — user scope, so it works in every folder. Your other MCP servers are untouched.
 
-   ```
-   xattr -dr com.apple.quarantine /Applications/ReelFactory.app
-   ```
+It never runs `sudo` itself and never edits Claude Code's config except through `claude mcp`.
 
-   The build is ad-hoc signed rather than notarized, so without this macOS
-   reports it as damaged. It is not damaged — it carries no Apple-issued
-   identity, and the system blocks it until told otherwise.
-3. Launch it, open the **Setup** pane, and press **Install engine**.
+## Something wrong?
 
-Setup checks every dependency and names anything missing, so you can install
-what you have and let it tell you the rest.
+```
+curl -fsSL https://raw.githubusercontent.com/probuilderonsol/reelfactory-beta/main/install.sh | bash -s doctor
+```
 
-## Before you start
+Paste the output, plus the activity log from the bottom of the panel, into an
+[issue](../../issues) or send it directly.
 
-- DaVinci Resolve installed and launched at least once.
-- Resolve → Preferences → System → General → **External scripting using: Local**
-- `brew install ffmpeg`
-
-Optional, for the transcription-based panes: `pip3 install mlx-whisper` and
-`pip3 install demucs`.
-
-## Reporting a problem
-
-The activity log at the bottom of the panel is the real error message — send
-that, along with what you pressed. [Open an issue](../../issues) or send it
-directly.
+Manual install, uninstall, and the full walkthrough: **[INSTALL.md](INSTALL.md)**.
+Older builds: **[releases](../../releases)**.

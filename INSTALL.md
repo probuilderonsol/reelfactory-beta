@@ -11,6 +11,17 @@ is expected and the steps are below.
 
 ---
 
+## 0. The one-line way
+
+Everything below is what this line does for you:
+
+```
+curl -fsSL https://raw.githubusercontent.com/probuilderonsol/reelfactory-beta/main/install.sh | bash
+```
+
+Add ` -s doctor` at the end for a read-only report of what is and isn't set
+up. Keep reading if you would rather do it by hand.
+
 ## 1. What you need first
 
 | | |
@@ -97,3 +108,26 @@ reach it.
   quarantine flag from step 2. Run the `xattr` command.
 - **Everything else** — the activity log at the bottom of the panel is the
   real error message. Send that.
+
+## 7. Claude Code bridge, by hand
+
+```
+git clone --depth 1 https://github.com/samuelgursky/davinci-resolve-mcp \
+  "$HOME/Library/Application Support/ReelFactory/davinci-resolve-mcp"
+cd "$HOME/Library/Application Support/ReelFactory/davinci-resolve-mcp"
+python3 -m venv venv && venv/bin/pip install 'mcp[cli]'
+claude mcp add -s user davinci-resolve -- "$PWD/venv/bin/python" "$PWD/src/server.py"
+```
+
+Python 3.10 or newer is needed for the venv (`brew install python` if the
+system one is older).
+
+## 8. Uninstall
+
+```
+claude mcp remove -s user davinci-resolve
+rm -rf /Applications/ReelFactory.app "$HOME/Library/Application Support/ReelFactory"
+```
+
+Then drag ReelFactory off the Dock. The engine scripts copied into Resolve
+live in `~/Library/Application Support/Blackmagic Design/DaVinci Resolve/Fusion/Scripts/Utility`.
